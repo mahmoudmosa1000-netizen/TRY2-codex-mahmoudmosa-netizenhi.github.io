@@ -10,6 +10,56 @@
 <body>
 
 <!-- ══════════════════════════════════════════
+     APP NAV (sticky, appears below hero)
+══════════════════════════════════════════ -->
+<nav id="app-nav">
+  <div class="nav-l">
+    <div class="logo" onclick="closeAll()">CODEX</div>
+    <span class="nav-gallery-label">Code Gallery</span>
+  </div>
+  <div class="nav-r">
+    <span class="nav-pill" id="pcount">0 Works</span>
+    <div class="vtog">
+      <button class="vt on" id="vg" onclick="setView('grid')" title="Grid (G)">⊞</button>
+      <button class="vt" id="vl" onclick="setView('list')" title="Liste (L)">☰</button>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" id="theme-btn">◑ Theme</button>
+    <button class="btn btn-ghost btn-sm" onclick="toggleDash()" id="dash-btn">◉ Stats</button>
+    <button class="btn btn-ghost btn-sm" onclick="showModal('import-modal')">⬇ Import</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportAll()" title="Export JSON">⬆ Export</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportHTML()" title="Export read-only HTML gallery">⊟ HTML</button>
+    <button class="btn btn-ghost btn-sm btn-ico" onclick="showModal('sc-modal')">?</button>
+    <button class="btn btn-primary" onclick="openDrw(null)">＋ Project</button>
+  </div>
+</nav>
+
+<div class="dash" id="dash"></div>
+<div class="coll-bar" id="coll-bar"></div>
+
+<div class="toolbar">
+  <div class="sw">
+    <span class="si">⌕</span>
+    <input id="search" placeholder="Search… (⌘K)" oninput="focusIdx=-1;render()">
+  </div>
+  <button class="pill" id="fav-pill" onclick="toggleFavFilter()" style="display:none">★ Favorites</button>
+  <div class="pills" id="pills"></div>
+  <div class="tsep"></div>
+  <select class="sortsel" id="sort" onchange="focusIdx=-1;render();window.scrollTo({top:0,behavior:'smooth'})">
+    <option value="new">Newest</option>
+    <option value="fav">Favorites ★</option>
+    <option value="az">A → Z</option>
+    <option value="lang">Language</option>
+    <option value="lines">Lines</option>
+    <option value="cx">Complexity</option>
+  </select>
+</div>
+
+<div class="recent-bar" id="recent-bar">
+  <span class="recent-label">Zuletzt</span>
+  <div class="recent-chips" id="recent-chips"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
      AMBIENT BACKGROUND (fixed canvas + beam)
 ══════════════════════════════════════════ -->
 <div class="beam"></div>
@@ -72,56 +122,6 @@
     </div>
   </div>
 </section>
-
-<!-- ══════════════════════════════════════════
-     APP NAV (sticky, appears below hero)
-══════════════════════════════════════════ -->
-<nav id="app-nav">
-  <div class="nav-l">
-    <div class="logo" onclick="closeAll()">CODEX</div>
-    <span class="nav-gallery-label">Code Gallery</span>
-  </div>
-  <div class="nav-r">
-    <span class="nav-pill" id="pcount">0 Works</span>
-    <div class="vtog">
-      <button class="vt on" id="vg" onclick="setView('grid')" title="Grid (G)">⊞</button>
-      <button class="vt" id="vl" onclick="setView('list')" title="Liste (L)">☰</button>
-    </div>
-    <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" id="theme-btn">◑ Theme</button>
-    <button class="btn btn-ghost btn-sm" onclick="toggleDash()" id="dash-btn">◉ Stats</button>
-    <button class="btn btn-ghost btn-sm" onclick="showModal('import-modal')">⬇ Import</button>
-    <button class="btn btn-ghost btn-sm" onclick="exportAll()" title="Export JSON">⬆ Export</button>
-    <button class="btn btn-ghost btn-sm" onclick="exportHTML()" title="Export read-only HTML gallery">⊟ HTML</button>
-    <button class="btn btn-ghost btn-sm btn-ico" onclick="showModal('sc-modal')">?</button>
-    <button class="btn btn-primary" onclick="openDrw(null)">＋ Project</button>
-  </div>
-</nav>
-
-<div class="dash" id="dash"></div>
-<div class="coll-bar" id="coll-bar"></div>
-
-<div class="toolbar">
-  <div class="sw">
-    <span class="si">⌕</span>
-    <input id="search" placeholder="Search… (⌘K)" oninput="focusIdx=-1;render()">
-  </div>
-  <button class="pill" id="fav-pill" onclick="toggleFavFilter()" style="display:none">★ Favorites</button>
-  <div class="pills" id="pills"></div>
-  <div class="tsep"></div>
-  <select class="sortsel" id="sort" onchange="focusIdx=-1;render();window.scrollTo({top:0,behavior:'smooth'})">
-    <option value="new">Newest</option>
-    <option value="fav">Favorites ★</option>
-    <option value="az">A → Z</option>
-    <option value="lang">Language</option>
-    <option value="lines">Lines</option>
-    <option value="cx">Complexity</option>
-  </select>
-</div>
-
-<div class="recent-bar" id="recent-bar">
-  <span class="recent-label">Zuletzt</span>
-  <div class="recent-chips" id="recent-chips"></div>
-</div>
 
 <!-- ══════════════════════════════════════════
      GALLERY MAIN
