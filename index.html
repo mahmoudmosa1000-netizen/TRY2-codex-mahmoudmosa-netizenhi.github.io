@@ -456,7 +456,7 @@
 <!-- ══════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════ -->
-<script src="script.js"></script>
+<script src="Script.js"></script>
 <script>
   // Update hero stats after data loads
   function updateHeroStats() {
@@ -481,14 +481,10 @@
     animCount(document.getElementById('hs-langs'),    langs);
   }
 
-  // Hook into the existing load/render cycle
-  const _origLoad = load;
-  window.addEventListener('DOMContentLoaded', () => {
-    // load() is called at the bottom of script.js already;
-    // we just observe when P is populated
-    setTimeout(updateHeroStats, 200);
-  });
-  // Also refresh stats when a project is saved
+  // Refresh hero stats after initial load (script.js already called load())
+  setTimeout(updateHeroStats, 250);
+
+  // Also refresh stats whenever a project is saved
   const _origSave = save;
   window.save = function() { _origSave(); updateHeroStats(); };
 </script>
