@@ -990,7 +990,7 @@ function importFile(e){const f=e.target.files[0];if(!f)return;
   };
   r.readAsText(f);
 }
-function importData(raw){try{const d=JSON.parse(raw);const arr=d.P||[].concat(d);let n=0;if(d.C)d.C.forEach(c=>{if(!C.find(x=>x.id===c.id))C.push(c)});arr.forEach(p=>{if(!p.name||!p.code)return;if(!P.find(x=>x.name===p.name&&x.code===p.code)){P.push({id:uid(),language:'Other',tags:[],accentColor:ACC[0],description:'',starred:false,note:'',...p,id:uid()});n++}});save();render();hideModal('import-modal');toast(n+' imported','ok')}catch{toast('Invalid JSON','err')}}
+function importData(raw){try{const d=JSON.parse(raw);const arr=d.P||[].concat(d);let n=0,skippedDup=0,skippedInvalid=0;if(d.C)d.C.forEach(c=>{if(!C.find(x=>x.id===c.id))C.push(c)});arr.forEach(p=>{if(!p.name||!p.code){skippedInvalid++;return;}if(P.find(x=>x.name===p.name&&x.code===p.code)){skippedDup++;return;}P.push({id:uid(),language:'Other',tags:[],accentColor:ACC[0],description:'',starred:false,note:'',...p,id:uid()});n++;});save();render();hideModal('import-modal');if(n>0){toast(n+' project'+(n!==1?'s':'')+' imported ✓','ok');}else if(skippedDup>0){toast('All projects already in gallery ('+skippedDup+' duplicates skipped)','info');}else if(skippedInvalid>0){toast('No valid projects found — JSON must contain "name" and "code" fields','err');}else{toast('Nothing to import — file may be empty','err');}}catch(e){toast('Invalid JSON: '+e.message,'err');}}
 function dragOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('active')}
 function dragLeave(){document.getElementById('drop-zone').classList.remove('active')}
 function dropFile(e){e.preventDefault();dragLeave();const f=e.dataTransfer.files[0];
